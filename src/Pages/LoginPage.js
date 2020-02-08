@@ -28,7 +28,7 @@ class LoginPage extends Component {
     history.push("/");
   };
   render() {
-    const { is_authenticated, history, is_loading, user, id } = this.props;
+    const { is_authenticated, history, is_loading, user } = this.props;
     console.log("state", this.state);
     if (is_authenticated) {
       if (this.state.remember) {
