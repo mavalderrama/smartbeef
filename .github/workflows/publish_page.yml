@@ -22,3 +22,5 @@ jobs:
     - run: mv build docs
     - name: Push to master
       uses: tcitry/push-to-master@v1.0
+      with:
+        secrets: ${{ secrets.GITHUB_TOKEN }}
