@@ -42,7 +42,9 @@ const styles = theme => ({
     height: "100vh"
   },
   image: {
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    // backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage:
+      "url(https://dkpo4ygqb6rh6.cloudfront.net/COWSIGNALS_COM/imageresized/4023/8248646f7e35630b2bb4bf597c22b73a/2560_1440_75_fixedjpg/cowsignals_2560px.jpg)",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center"
