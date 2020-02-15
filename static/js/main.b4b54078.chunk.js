@@ -661,6 +661,7 @@
                 key: "render",
                 value: function() {
                   var e = this;
+                  console.log("test");
                   return o.a.createElement(
                     ve.a,
                     null,
@@ -828,4 +829,4 @@
   },
   [[167, 1, 2]]
 ]);
-//# sourceMappingURL=main.2d285f60.chunk.js.map
+//# sourceMappingURL=main.b4b54078.chunk.js.map

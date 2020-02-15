@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    revision: "c6ef583e780931faa39263f543418f2e",
+    revision: "ec0afc8c94a8ae342b8c5118275264af",
     url: "/comacow/index.html"
   },
   {
-    revision: "c9e035651c87fab915bd",
+    revision: "b6937fd4fd48e2b99305",
     url: "/comacow/static/css/main.69eda509.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     url: "/comacow/static/js/2.ac656e34.chunk.js.LICENSE.txt"
   },
   {
-    revision: "c9e035651c87fab915bd",
-    url: "/comacow/static/js/main.2d285f60.chunk.js"
+    revision: "b6937fd4fd48e2b99305",
+    url: "/comacow/static/js/main.b4b54078.chunk.js"
   },
   {
     revision: "c7139a9ea52fe772c861",

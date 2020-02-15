@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/comacow/static/css/main.69eda509.chunk.css",
-    "main.js": "/comacow/static/js/main.2d285f60.chunk.js",
-    "main.js.map": "/comacow/static/js/main.2d285f60.chunk.js.map",
+    "main.js": "/comacow/static/js/main.b4b54078.chunk.js",
+    "main.js.map": "/comacow/static/js/main.b4b54078.chunk.js.map",
     "runtime-main.js": "/comacow/static/js/runtime-main.0e3151d7.js",
     "runtime-main.js.map": "/comacow/static/js/runtime-main.0e3151d7.js.map",
     "static/js/2.ac656e34.chunk.js": "/comacow/static/js/2.ac656e34.chunk.js",
     "static/js/2.ac656e34.chunk.js.map": "/comacow/static/js/2.ac656e34.chunk.js.map",
     "index.html": "/comacow/index.html",
-    "precache-manifest.e5a32e0e3cc5f6794a56afb80f58d225.js": "/comacow/precache-manifest.e5a32e0e3cc5f6794a56afb80f58d225.js",
+    "precache-manifest.1a6c72b440aa8e033535e27afcc732a6.js": "/comacow/precache-manifest.1a6c72b440aa8e033535e27afcc732a6.js",
     "service-worker.js": "/comacow/service-worker.js",
     "static/css/main.69eda509.chunk.css.map": "/comacow/static/css/main.69eda509.chunk.css.map",
     "static/js/2.ac656e34.chunk.js.LICENSE.txt": "/comacow/static/js/2.ac656e34.chunk.js.LICENSE.txt",
@@ -19,6 +19,6 @@
     "static/js/runtime-main.0e3151d7.js",
     "static/js/2.ac656e34.chunk.js",
     "static/css/main.69eda509.chunk.css",
-    "static/js/main.2d285f60.chunk.js"
+    "static/js/main.b4b54078.chunk.js"
   ]
 }
