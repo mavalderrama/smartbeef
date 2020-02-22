@@ -9,13 +9,15 @@ import { bindActionCreators } from "redux";
 import * as auth_actions from "../Redux/Actions/auth_actions";
 import { connect } from "react-redux";
 import { withStyles, withTheme } from "@material-ui/core";
+import { responsiveFontSizes, ThemeProvider } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {
     flex: 1,
-    justifyContent: "flex-end",
     // marginBottom: 36,
-    paddingTop: "98%"
+    position: "fixed",
+    bottom: "1%",
+    width: "100%"
   }
 });
 
@@ -25,24 +27,28 @@ class Wrapper extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
+    console.log("props", this.props);
+    let style = responsiveFontSizes(theme);
     return (
-      <React.Fragment>
-        {this.props.children}
-        <BottomNavigation
-          // value={value}
-          // onChange={(event, newValue) => {
-          //   setValue(newValue);
-          // }}
-          showLabels
-          className={classes.root}
-        >
-          <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-          <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-          <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-          <BottomNavigationAction label="Post" icon={<AddIcon />} />
-        </BottomNavigation>
-      </React.Fragment>
+      <ThemeProvider theme={style}>
+        <React.Fragment>
+          {this.props.children}
+          <BottomNavigation
+            // value={value}
+            // onChange={(event, newValue) => {
+            //   setValue(newValue);
+            // }}
+            showLabels
+            className={classes.root}
+          >
+            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+            <BottomNavigationAction label="Post" icon={<AddIcon />} />
+          </BottomNavigation>
+        </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

@@ -4,6 +4,7 @@ import * as auth_actions from "./../../Redux/Actions/auth_actions";
 import { bindActionCreators } from "redux";
 import LoginPage from "../../Pages/LoginPage";
 import MainPage from "../../Pages/MainPage";
+import SignupPage from "../../Pages/SignupPage";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -17,6 +18,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("test");
     let SecureRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
@@ -25,7 +27,10 @@ class App extends Component {
             <Component {...props} />
           ) : (
             <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
+              to={{
+                pathname: "/login",
+                state: { from: props.location }
+              }}
             />
           )
         }
@@ -35,8 +40,8 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/login" component={LoginPage} />
+          <Route exact path="/singup" component={SignupPage} />
           <SecureRoute exact path="/" component={MainPage} />
-          {/*<SecureRoute exact path="/" component={LoginPage} />*/}
         </Switch>
       </Router>
     );

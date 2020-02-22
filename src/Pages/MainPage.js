@@ -16,6 +16,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import Grid from "@material-ui/core/Grid";
 import { withStyles, withTheme } from "@material-ui/core";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider
+} from "@material-ui/core/styles";
 import calf from "../static/images/calf.jpg";
 import cattle from "../static/images/cattle.jpg";
 
@@ -24,7 +29,7 @@ const styles = theme => ({
     // flexGrow: 1,
     // display: "flex",
     // flexWrap: "wrap",
-    maxHeight: 400,
+    // maxHeight: 400,
     minHeight: 300
     // maxWidth: 345
   },
@@ -51,84 +56,95 @@ class MainPage extends Component {
     console.log("did mount MainPage");
   }
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
+    let style = responsiveFontSizes(theme);
     return (
-      <Wrapper>
-        <Grid container className={classes.root} spacing={2}>
-          <Grid item xs={6} xl={3}>
-            <Card className={classes.root}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
-                  </Avatar>
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+      <ThemeProvider theme={style}>
+        <Wrapper>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={6} xl={3}>
+              <Card className={classes.root}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title="Sell"
+                  // subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={cattle}
+                  title="Calf selling"
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    test...
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
                   </IconButton>
-                }
-                title="Sell"
-                // subheader="September 14, 2016"
-              />
-              <CardMedia
-                className={classes.media}
-                image={cattle}
-                title="Calf selling"
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  test...
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={6} xl={3}>
-            <Card className={classes.root}>
-              <CardHeader
-                avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    R
-                  </Avatar>
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                  <IconButton aria-label="share">
+                    <ShareIcon />
                   </IconButton>
-                }
-                title="Buy"
-                // subheader="September 14, 2016"
-              />
-              <CardMedia
-                className={classes.media}
-                image={calf}
-                title="Paella dish"
-              />
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  test2...
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
-              </CardActions>
-            </Card>
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={6} xl={3}>
+              <Card className={classes.root}>
+                <CardHeader
+                  avatar={
+                    <Avatar aria-label="recipe" className={classes.avatar}>
+                      R
+                    </Avatar>
+                  }
+                  action={
+                    <IconButton aria-label="settings">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title="Buy"
+                  // subheader="September 14, 2016"
+                />
+                <CardMedia
+                  className={classes.media}
+                  image={calf}
+                  title="Paella dish"
+                />
+                <CardContent>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    test2...
+                  </Typography>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Wrapper>
+        </Wrapper>
+      </ThemeProvider>
     );
   }
 }
