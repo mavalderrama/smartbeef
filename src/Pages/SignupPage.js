@@ -3,6 +3,8 @@ import { bindActionCreators } from "redux";
 import * as signup_actions from "../Redux/Actions/signup_actions";
 import { withStyles, withTheme } from "@material-ui/core";
 import SignupForm from "../Forms/SignupForm";
+import CreateFarmForm from "../Forms/CreateFarmForm";
+import SelectLiveStockForm from "../Forms/SelectLiveStockForm";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -39,13 +41,18 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ["Sign Up", "Select your Livestock", "XXX"];
+  return ["Sign Up", "Create your Farm", "Select Your Livestock", "Finalize"];
 }
 
 class SignupPage extends Component {
   componentDidMount() {
     console.log("did mount Sign Up Form");
   }
+
+  nextStepper = () => {
+    const { actions } = this.props;
+    actions.next_stepper();
+  };
 
   render() {
     const { classes, activeStep, theme } = this.props;
@@ -63,13 +70,16 @@ class SignupPage extends Component {
             ))}
           </Stepper>
         </div>
-        <SignupForm />
+        {activeStep === 0 && <SignupForm />}
+        {activeStep === 1 && <CreateFarmForm />}
+        {activeStep === 2 && <SelectLiveStockForm />}
         <Button
           variant="contained"
           color="primary"
-          style={{ float: "right", "margin-right": "10%" }}
+          style={{ float: "right", marginRight: "10%" }}
+          onClick={this.nextStepper}
         >
-          Submit
+          Continue
         </Button>
       </ThemeProvider>
     );

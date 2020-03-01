@@ -29,6 +29,9 @@ import {
 import calf from "../static/images/calf.jpg";
 import cattle from "../static/images/cattle.jpg";
 
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import "./CreateFarmForm.css";
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -109,77 +112,35 @@ const renderComboField = ({
   );
 };
 
-class SignupPage extends Component {
+class CreateFarmForm extends Component {
   componentDidMount() {
     console.log("did mount Sign Up");
   }
   render() {
     const { classes } = this.props;
+
     return (
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={6} key={0}>
+        <Grid item xs={12} sm={12} key={0} style={{ marginBottom: "10px" }}>
           <Field
-            name="name"
+            name="farm_name"
             component={renderTextField}
-            label={"Name"}
+            label={"Farm Name"}
             required
           />
         </Grid>
-        <Grid item xs={12} sm={6} key={2}>
-          <Field
-            name="password"
-            component={renderTextField}
-            label={"Password"}
-            required
+        <Map center={[3.48949, -76.52301]} zoom={18}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           />
-        </Grid>
-        <Grid item xs={12} sm={6} key={3}>
-          <Field
-            name="company"
-            component={renderTextField}
-            label={"Company Name"}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} key={4}>
-          <Field
-            name="email"
-            component={renderTextField}
-            label={"e-Mail"}
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} key={5}>
-          <Field
-            name="phone"
-            component={renderTextField}
-            label={"Phone Number"}
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} key={6}>
-          <Field
-            name="location"
-            component={renderTextField}
-            label={"Location"}
-            required
-          />
-        </Grid>
-        {/*<Grid item xs={12} sm={6} key={5}>*/}
-        {/*  <Field*/}
-        {/*    name="customer"*/}
-        {/*    component={renderComboField}*/}
-        {/*    label={"Customer Type"}*/}
-        {/*    data={[*/}
-        {/*      { name: "Seller", id: 1 },*/}
-        {/*      { name: "Buyer", id: 2 }*/}
-        {/*    ]}*/}
-        {/*  />*/}
-        {/*</Grid>*/}
+          <Marker key={1} position={[3.48949, -76.52301]} />
+        </Map>
       </Grid>
     );
   }
 }
 
 export default reduxForm({ form: "adminControl" })(
-  withStyles(styles)(SignupPage)
+  withStyles(styles)(CreateFarmForm)
 );

@@ -29,6 +29,10 @@ import {
 import calf from "../static/images/calf.jpg";
 import cattle from "../static/images/cattle.jpg";
 
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import Slider from "@material-ui/core/Slider";
+import Input from "@material-ui/core/Input";
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -38,21 +42,11 @@ const styles = theme => ({
     // maxHeight: 400,
     // maxWidth: 345
   },
-  // button: {
-  //   padding: theme.spacing(4),
-  //   textAlign: "center",
-  //   whiteSpace: "nowrap",
-  //   marginTop: theme.spacing(1),
-  //   width: "95%", // Fix IE 11 issue.
-  //   marginLeft: theme.spacing(1),
-  //   marginRight: theme.spacing(1)
-  // },
-  media: {
-    height: 0,
-    paddingTop: "90%" // 16:9
-    // width: "95%" // Fix IE 11 issue.
-    // "background-image": "url(../static/images/calf.jpg)"
-    // marginLeft: theme.spacing(1)
+  slider: {
+    width: 250
+  },
+  input: {
+    width: 42
   }
 });
 
@@ -109,77 +103,88 @@ const renderComboField = ({
   );
 };
 
-class SignupPage extends Component {
+class SelectLiveStockForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cowSelector: 0,
+      calfSelector: 0
+    };
+  }
   componentDidMount() {
     console.log("did mount Sign Up");
   }
+
+  handleSliderChange = (refName, event, newValue) => {
+    this.setState({ [refName]: newValue });
+  };
+
+  handleInputChange = (refName, event) => {
+    this.setState({
+      [refName]: event.target.value === "" ? "" : Number(event.target.value)
+    });
+  };
+
   render() {
     const { classes } = this.props;
+    const { cowSelector, calfSelector } = this.state;
     return (
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} sm={6} key={0}>
-          <Field
-            name="name"
-            component={renderTextField}
-            label={"Name"}
-            required
+        <Typography id="input-slider" gutterBottom>
+          Number of Cows
+        </Typography>
+        <Grid item xs={8} sm={12} key={0} className={classes.slider}>
+          <Slider
+            value={typeof cowSelector === "number" ? cowSelector : 0}
+            onChange={this.handleSliderChange.bind(this, "cowSelector")}
+            aria-labelledby="input-slider"
+            min={0}
+            max={200}
           />
         </Grid>
-        <Grid item xs={12} sm={6} key={2}>
-          <Field
-            name="password"
-            component={renderTextField}
-            label={"Password"}
-            required
+        <Grid item xs={4}>
+          <Input
+            className={classes.input}
+            value={cowSelector}
+            margin="dense"
+            onChange={this.handleInputChange.bind(this, "cowSelector")}
+            inputProps={{
+              min: 0,
+              type: "number",
+              "aria-labelledby": "input-slider"
+            }}
           />
         </Grid>
-        <Grid item xs={12} sm={6} key={3}>
-          <Field
-            name="company"
-            component={renderTextField}
-            label={"Company Name"}
+        <Typography id="input-slider2" gutterBottom>
+          Number of Cattles
+        </Typography>
+        <Grid item xs={8} sm={12} key={1} className={classes.slider}>
+          <Slider
+            value={typeof calfSelector === "number" ? calfSelector : 0}
+            onChange={this.handleSliderChange.bind(this, "calfSelector")}
+            aria-labelledby="input-slider2"
+            min={0}
+            max={200}
           />
         </Grid>
-        <Grid item xs={12} sm={6} key={4}>
-          <Field
-            name="email"
-            component={renderTextField}
-            label={"e-Mail"}
-            required
+        <Grid item xs={4}>
+          <Input
+            className={classes.input}
+            value={calfSelector}
+            margin="dense"
+            onChange={this.handleInputChange.bind(this, "calfSelector")}
+            inputProps={{
+              min: 0,
+              type: "number",
+              "aria-labelledby": "input-slider2"
+            }}
           />
         </Grid>
-        <Grid item xs={12} sm={6} key={5}>
-          <Field
-            name="phone"
-            component={renderTextField}
-            label={"Phone Number"}
-            required
-          />
-        </Grid>
-        <Grid item xs={12} sm={6} key={6}>
-          <Field
-            name="location"
-            component={renderTextField}
-            label={"Location"}
-            required
-          />
-        </Grid>
-        {/*<Grid item xs={12} sm={6} key={5}>*/}
-        {/*  <Field*/}
-        {/*    name="customer"*/}
-        {/*    component={renderComboField}*/}
-        {/*    label={"Customer Type"}*/}
-        {/*    data={[*/}
-        {/*      { name: "Seller", id: 1 },*/}
-        {/*      { name: "Buyer", id: 2 }*/}
-        {/*    ]}*/}
-        {/*  />*/}
-        {/*</Grid>*/}
       </Grid>
     );
   }
 }
 
 export default reduxForm({ form: "adminControl" })(
-  withStyles(styles)(SignupPage)
+  withStyles(styles)(SelectLiveStockForm)
 );
