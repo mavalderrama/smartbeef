@@ -16,6 +16,10 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import Grid from "@material-ui/core/Grid";
 import { withStyles, withTheme } from "@material-ui/core";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import {
   createMuiTheme,
   responsiveFontSizes,
@@ -23,6 +27,7 @@ import {
 } from "@material-ui/core/styles";
 import calf from "../static/images/calf.jpg";
 import cattle from "../static/images/cattle.jpg";
+import XLSX from "xlsx";
 
 const styles = theme => ({
   root: {
@@ -48,16 +53,84 @@ const styles = theme => ({
     // width: "95%" // Fix IE 11 issue.
     // "background-image": "url(../static/images/calf.jpg)"
     // marginLeft: theme.spacing(1)
+  },
+  buttonWrapper: {
+    position: "relative"
+    // marginTop: theme.spacing(3),
+    // height: 380
+  },
+  speedDial: {
+    position: "fixed",
+    // float: "right",
+    // bottom: "1%"
+    // width: "60px",
+    // height: "60px",
+    bottom: "80px",
+    right: "20px"
+    // paddingRight: theme.spacing(2)
+    // position: "absolute",
+    // "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
+    //   top: theme.spacing(2),
+    //   left: theme.spacing(2)
+    // }
   }
 });
 
 class MainPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openSpeedDial: false,
+      data: [] /* Array of Arrays e.g. [["a","b"],[1,2]] */,
+      cols: [] /* Array of column objects e.g. { name: "C", K: 2 } */
+    };
+    // this.handleFile = this.handleFile.bind(this);
+  }
   componentDidMount() {
     console.log("did mount MainPage");
   }
+
+  handleOpen = () => {
+    if (this.state.openSpeedDial) this.setState({ openSpeedDial: false });
+    else this.setState({ openSpeedDial: true });
+  };
+
+  uploadSheet = () => {
+    document.getElementById("xlsxUpload").click();
+  };
+
+  handleUploadFile = async event => {
+    const file = event.target.files[0];
+    console.log("here at upload");
+    /* Boilerplate to set up FileReader */
+    const reader = new FileReader();
+    const rABS = !!reader.readAsBinaryString;
+    reader.onload = e => {
+      /* Parse data */
+      const bstr = e.target.result;
+      const wb = XLSX.read(bstr, { type: rABS ? "binary" : "array" });
+      /* Get first worksheet */
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      /* Convert array of arrays */
+      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      console.log(data, "data");
+      /* Update state */
+      this.setState({ data: data, cols: make_cols(ws["!ref"]) });
+    };
+    if (rABS) {
+      reader.readAsBinaryString(file);
+    } else {
+      reader.readAsArrayBuffer(file);
+    }
+  };
+
   render() {
     const { classes, theme } = this.props;
+    const { openSpeedDial } = this.state;
     let style = responsiveFontSizes(theme);
+    const actions = [{ icon: <CloudUploadIcon />, name: "Copy" }];
+
     return (
       <ThemeProvider theme={style}>
         <Wrapper>
@@ -143,7 +216,35 @@ class MainPage extends Component {
               </Card>
             </Grid>
           </Grid>
+          <div className={classes.buttonWrapper}>
+            <SpeedDial
+              ariaLabel="SpeedDial"
+              className={classes.speedDial}
+              icon={<SpeedDialIcon />}
+              onClose={this.handleOpen}
+              onOpen={this.handleOpen}
+              open={openSpeedDial}
+              direction={"up"}
+            >
+              {actions.map(action => (
+                <SpeedDialAction
+                  key={action.name}
+                  icon={action.icon}
+                  tooltipTitle={action.name}
+                  onClick={this.uploadSheet}
+                />
+              ))}
+            </SpeedDial>
+          </div>
         </Wrapper>
+        <input
+          style={{ display: "none" }}
+          accept=".xlsx"
+          id="xlsxUpload"
+          type="file"
+          ref="xlsxUpload"
+          onChange={this.handleUploadFile}
+        />
       </ThemeProvider>
     );
   }
@@ -164,3 +265,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(withTheme(MainPage)));
+
+/* generate an array of column objects */
+const make_cols = refstr => {
+  let o = [],
+    C = XLSX.utils.decode_range(refstr).e.c + 1;
+  for (var i = 0; i < C; ++i) o[i] = { name: XLSX.utils.encode_col(i), key: i };
+  return o;
+};
