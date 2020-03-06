@@ -101,7 +101,6 @@ class MainPage extends Component {
 
   handleUploadFile = async event => {
     const file = event.target.files[0];
-    console.log("here at upload");
     /* Boilerplate to set up FileReader */
     const reader = new FileReader();
     const rABS = !!reader.readAsBinaryString;
@@ -114,8 +113,21 @@ class MainPage extends Component {
       const ws = wb.Sheets[wsname];
       /* Convert array of arrays */
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      console.log(data, "data");
       /* Update state */
+      let columns;
+      let rows = [];
+      for (let index in data) {
+        if (index < 1) columns = data[0];
+        else {
+          let value = {};
+          for (let row_value in data[index]) {
+            value[columns[row_value]] = data[index][row_value];
+          }
+          rows["cow" + index] = value;
+        }
+      }
+      console.log(rows);
+
       this.setState({ data: data, cols: make_cols(ws["!ref"]) });
     };
     if (rABS) {
@@ -137,20 +149,6 @@ class MainPage extends Component {
           <Grid container className={classes.root} spacing={2}>
             <Grid item xs={6} xl={3}>
               <Card className={classes.root}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Sell"
-                  // subheader="September 14, 2016"
-                />
                 <CardMedia
                   className={classes.media}
                   image={cattle}
@@ -163,46 +161,6 @@ class MainPage extends Component {
                     component="p"
                   >
                     test...
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={6} xl={3}>
-              <Card className={classes.root}>
-                <CardHeader
-                  avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                      R
-                    </Avatar>
-                  }
-                  action={
-                    <IconButton aria-label="settings">
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                  title="Buy"
-                  // subheader="September 14, 2016"
-                />
-                <CardMedia
-                  className={classes.media}
-                  image={calf}
-                  title="Paella dish"
-                />
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    test2...
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
