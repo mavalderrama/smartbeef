@@ -81,8 +81,7 @@ class MainPage extends Component {
     super(props);
     this.state = {
       openSpeedDial: false,
-      data: [] /* Array of Arrays e.g. [["a","b"],[1,2]] */,
-      cols: [] /* Array of column objects e.g. { name: "C", K: 2 } */
+      data: [] /* Array of Arrays e.g. [["a","b"],[1,2]] */
     };
     // this.handleFile = this.handleFile.bind(this);
   }
@@ -123,12 +122,12 @@ class MainPage extends Component {
           for (let row_value in data[index]) {
             value[columns[row_value]] = data[index][row_value];
           }
-          rows["cow" + index] = value;
+          value["index"] = index;
+          rows.push(value);
         }
       }
-      console.log(rows);
 
-      this.setState({ data: data, cols: make_cols(ws["!ref"]) });
+      this.setState({ data: rows });
     };
     if (rABS) {
       reader.readAsBinaryString(file);
@@ -139,7 +138,7 @@ class MainPage extends Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { openSpeedDial } = this.state;
+    const { openSpeedDial, data } = this.state;
     let style = responsiveFontSizes(theme);
     const actions = [{ icon: <CloudUploadIcon />, name: "Copy" }];
 
@@ -147,32 +146,34 @@ class MainPage extends Component {
       <ThemeProvider theme={style}>
         <Wrapper>
           <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={6} xl={3}>
-              <Card className={classes.root}>
-                <CardMedia
-                  className={classes.media}
-                  image={cattle}
-                  title="Calf selling"
-                />
-                <CardContent>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    test...
-                  </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                  </IconButton>
-                  <IconButton aria-label="share">
-                    <ShareIcon />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            </Grid>
+            {data.map(cow => (
+              <Grid item xs={6} xl={3} key={cow.index}>
+                <Card className={classes.root}>
+                  <CardMedia
+                    className={classes.media}
+                    image={cattle}
+                    title="Calf selling"
+                  />
+                  <CardContent>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {cow.variety}
+                    </Typography>
+                  </CardContent>
+                  <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                      <FavoriteIcon />
+                    </IconButton>
+                    <IconButton aria-label="share">
+                      <ShareIcon />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              </Grid>
+            ))}
           </Grid>
           <div className={classes.buttonWrapper}>
             <SpeedDial

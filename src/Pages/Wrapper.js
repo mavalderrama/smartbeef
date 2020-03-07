@@ -16,7 +16,7 @@ const styles = theme => ({
     flex: 1,
     // marginBottom: 36,
     position: "fixed",
-    bottom: "1%",
+    bottom: "0%",
     width: "100%"
   }
 });
