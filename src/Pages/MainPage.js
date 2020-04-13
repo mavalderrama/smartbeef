@@ -140,7 +140,7 @@ class MainPage extends Component {
     const { classes, theme } = this.props;
     const { openSpeedDial, data } = this.state;
     let style = responsiveFontSizes(theme);
-    const actions = [{ icon: <CloudUploadIcon />, name: "Copy" }];
+    const actions = [{ icon: <CloudUploadIcon />, name: "Upload" }];
 
     return (
       <ThemeProvider theme={style}>
@@ -189,6 +189,7 @@ class MainPage extends Component {
                 <SpeedDialAction
                   key={action.name}
                   icon={action.icon}
+                  tooltipOpen
                   tooltipTitle={action.name}
                   onClick={this.uploadSheet}
                 />
